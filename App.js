@@ -21,12 +21,13 @@ async componentDidMount() {
   }
   currentCategory = () => {
     return this.state.category.find(
-      (caterino) => caterino.catId ===this.state.currentCategoryId
+      (detail) => detail.catId ===this.state.currentCategoryId
       )
   };
+
   render() {
     if(this.state.currentCategoryId) {
-      return <CategoryDetail caterino={this.currentCategory()} />
+      return <CategoryDetail detail={this.currentCategory()} />
     }
     if(this.state.category.length > 0 ) {
       return <CategoryList category={this.state.category} onItemPress={this.setCurrentCategory}/>
@@ -53,3 +54,4 @@ const styles = StyleSheet.create({
     marginTop:40,
   }
 });
+
