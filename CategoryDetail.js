@@ -2,44 +2,50 @@ import React, { Component } from "react";
 import { 
     View,
     Text,
-    StyleSheet,Image,
+    StyleSheet,Image,FlatList
 
 } from "react-native";
 import Proptypes from 'prop-types'
 import ajax from '../networking/Authentication'
 
-class DealDetail extends Component {
+
+
+class DealDetail extends React.Component {
     static proptypes = {
-        caterino:Proptypes.array.isRequired,
+        detail:Proptypes.array.isRequired,
     };
     state = {
-        helloworld:this.props.caterino
+        open:this.props.detail,
     };
     async componentDidMount() {
-        const fullCategory = await ajax.fetchCategoryDetail(this.state.helloworld.catId)
-        console.log(fullCategory)
-        this.setState({helloworld : fullCategory });
-        
+        const fullCategory = await ajax.fetchCategoryDetail(this.state.open.catId)             
+        this.setState({open:fullCategory.content})
+    
     }
     render() {
-        const {helloworld} = this.state;
+        const {open} = this.state;
+        console.log(open)
+    
         return (
-            <View style={styles.deal}>
+            <View style={styles.deal} onPress={this.handlePress}>
             <View style ={styles.info}>
-                <Text style ={styles.title}>{helloworld.name}</Text>
+  
+                <View style ={styles.footer}>
+                <Text style ={styles.title}>{open.name}</Text>
                 </View>
-            {
-                helloworld.name &&
-                <View>
+              {
+                  open &&
+                    <View>
                     <Text>
-                        {helloworld.name.name}
+                    {open.name}
                     </Text>
                 </View>
-            }
+              }
                
             </View>
-   
-     
+            <Text></Text>
+            </View>
+        
         
         );
     }
@@ -65,7 +71,7 @@ const styles = StyleSheet.create({
         backgroundColor:'#fff',
         borderColor:'#bbb',
         borderWidth:1,
-        borderTopWidth:0
+        borderTopWidth:1
     },
     title: {
         fontSize: 16,
